@@ -1,9 +1,12 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.StackWalker.Option;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+
+import javax.xml.validation.Validator;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -136,22 +139,45 @@ public class SC {
 	
 	public static void SearchStudents() {
 		Scanner inputScanner = new Scanner(System.in);
-		System.out.println("\nEnter new student: \n");
-		System.out.println("*****************************");
-		System.out.println("\nStudent Name: ");
-		String name = inputScanner.next();
 		String studentNameFoundString = "\nStudent Not Found\n";
-		for (Integer idsInteger : studentData.keySet()) {
-			if (studentData.get(idsInteger).get(0).equals(name)) {
+		System.out.println("\nEnter an option: \n");
+		System.out.println("*****************************");
+		System.out.println("\n1) Search by name: ");
+		System.out.println("\n2) Search by id: ");
+		Integer option = inputScanner.nextInt();
+		if (option == 1) {
+			System.out.println("\n\nSearch by name: \n");
+			System.out.println("*****************************");
+			System.out.println("\nStudent Name: ");
+			String name = inputScanner.next();
+			
+			for (Integer idsInteger : studentData.keySet()) {
+				if (studentData.get(idsInteger).get(0).equals(name)) {
+					studentNameFoundString =  "\nstudent info: \n" +
+							"\nstudent id: " +
+							idsInteger.toString() +
+							"\nstudent name: " +
+							studentData.get(idsInteger).get(0).toString() +
+							"\nstudent email: " +
+							studentData.get(idsInteger).get(1).toString();
+				}
+			}
+		} else {
+			System.out.println("\n\nSearch by ID: \n");
+			System.out.println("*****************************");
+			System.out.println("\nStudent ID: ");
+			Integer id = inputScanner.nextInt();
+			if (studentData.get(id) != null)  {
 				studentNameFoundString =  "\nstudent info: \n" +
 						"\nstudent id: " +
-						idsInteger.toString() +
+						id.toString() +
 						"\nstudent name: " +
-						studentData.get(idsInteger).get(0).toString() +
+						studentData.get(id).get(0).toString() +
 						"\nstudent email: " +
-						studentData.get(idsInteger).get(1).toString();
+						studentData.get(id).get(1).toString();
 			}
 		}
+
 		display(new String[] {studentNameFoundString});
 	}
 
