@@ -81,12 +81,18 @@ public class SC {
 		System.out.println("\n\nSelect Option Number: \n");
 		System.out.println("\n1) Register new Students \n");
 		System.out.println("\n2) Search an existing student \n");
+		System.out.println("\n3) Update an existing student \n");
+		System.out.println("\n4) Delete an existing student \n");
 		try {
 			int option = inputScanner.nextInt();
 			if (option == 1) {
 				NewStudents();
 			} else if (option == 2) {
 				SearchStudents();
+			} else if (option == 3) {
+				UpdateStudentInfo();
+			} else if (option == 4) {
+				DeleteStudentInfo();
 			} else {
 				System.out.println("Wrong option");
 			}
@@ -179,6 +185,56 @@ public class SC {
 		}
 
 		display(new String[] {studentNameFoundString});
+	}
+	
+	public static void UpdateStudentInfo() {
+		Scanner inputScanner = new Scanner(System.in);
+		ArrayList<String> studentInfoArrayList = null;
+		Integer optionID = null;
+		System.out.println("\n Enter Student ID: ");
+		try {
+			optionID = inputScanner.nextInt();	
+			studentInfoArrayList = studentData.get(optionID);
+		} catch (Exception e) {
+			System.out.println("Wrong ID !!");
+		}
+		
+		if (studentInfoArrayList != null) {
+			System.out.println("Update for " + studentInfoArrayList.get(0) + " student: ");
+			System.out.println("*****************************");
+			System.out.println("Name of student : ");
+			String nameString = inputScanner.next();
+			System.out.println("Student email : ");	
+			String emailString = inputScanner.next();
+			// update student name & email 
+			studentInfoArrayList.set(0, nameString);
+			studentInfoArrayList.set(1, emailString);
+			studentData.put(optionID, studentInfoArrayList);
+			SaveFile();
+			display(new String[] {"Student Updated Successfully ..."});
+		}
+	}
+	
+	public static void DeleteStudentInfo() {
+		Scanner inputScanner = new Scanner(System.in);
+		ArrayList<String> studentInfoArrayList = null;
+		Integer optionID = null;
+		System.out.println("\n Enter Student ID: ");
+		try {
+			optionID = inputScanner.nextInt();	
+			studentInfoArrayList = studentData.get(optionID);
+		} catch (Exception e) {
+			System.out.println("Wrong ID !!");
+		}
+		
+		if (studentInfoArrayList != null) {
+			System.out.println("Deleting for " + studentInfoArrayList.get(0) + " student: ");
+			System.out.println("*****************************");
+			// update student name & email 
+			studentData.remove(optionID);
+			SaveFile();
+			display(new String[] {"Student Deleted Successfully ..."});
+		}
 	}
 
 }
